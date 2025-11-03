@@ -125,6 +125,10 @@ class Pluglio_Settings {
             'container_link' => [
                 'name' => __('Container Link', 'pluglio-elementor-addons'),
                 'description' => __('Adds link functionality to Elementor containers in the Advanced tab with hover animations and click area options.', 'pluglio-elementor-addons')
+            ],
+            'custom_wc_breadcrumbs' => [
+                'name' => __('Custom WC Breadcrumbs', 'pluglio-elementor-addons'),
+                'description' => __('Custom WooCommerce breadcrumbs widget with format: Products > Parent Product Category > Product Category 2nd Level', 'pluglio-elementor-addons')
             ]
         ];
     }

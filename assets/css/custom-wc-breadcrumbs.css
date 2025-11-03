@@ -1,0 +1,67 @@
+/**
+ * Custom WC Breadcrumbs Styles
+ */
+
+.pluglio-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    line-height: 1.6;
+}
+
+.pluglio-breadcrumbs a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.pluglio-breadcrumbs a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.pluglio-breadcrumbs-separator {
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pluglio-breadcrumbs-separator svg {
+    display: inline-block;
+    vertical-align: middle;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.pluglio-breadcrumbs-separator i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pluglio-breadcrumbs-current {
+    opacity: 0.7;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Better typography inheritance */
+.pluglio-breadcrumbs,
+.pluglio-breadcrumbs a,
+.pluglio-breadcrumbs span {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .pluglio-breadcrumbs {
+        font-size: 0.9em;
+    }
+}

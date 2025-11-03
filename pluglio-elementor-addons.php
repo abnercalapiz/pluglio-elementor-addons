@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Pluglio Elementor Addons
  * Description: Custom Elementor widgets and addons with configurable settings
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jezweb
  * Author URI: https://jezweb.com.au
  * Text Domain: pluglio-elementor-addons
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('PLUGLIO_VERSION', '1.0.0');
+define('PLUGLIO_VERSION', '1.0.1');
 define('PLUGLIO_URL', plugin_dir_url(__FILE__));
 define('PLUGLIO_PATH', plugin_dir_path(__FILE__));
 define('PLUGLIO_ASSETS_URL', PLUGLIO_URL . 'assets/');
@@ -63,15 +63,17 @@ class Pluglio_Elementor_Addons {
             require_once PLUGLIO_PATH . 'includes/extensions/container-link-extension.php';
         }
         
-        // Include widgets if needed (keeping for future widgets)
-        // if ($this->is_widget_enabled('some_widget')) {
-        //     require_once PLUGLIO_PATH . 'includes/widgets/some-widget.php';
-        // }
+        // Include widgets
+        if ($this->is_widget_enabled('custom_wc_breadcrumbs')) {
+            require_once PLUGLIO_PATH . 'includes/widgets/custom-wc-breadcrumbs.php';
+        }
     }
     
     public function register_widgets($widgets_manager) {
-        // This method can be used for future widget registrations
-        // Currently Container Link is implemented as an extension, not a widget
+        // Register Custom WC Breadcrumbs widget
+        if ($this->is_widget_enabled('custom_wc_breadcrumbs')) {
+            $widgets_manager->register(new \Pluglio_Custom_WC_Breadcrumbs());
+        }
     }
     
     public function add_elementor_widget_categories($elements_manager) {
