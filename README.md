@@ -1,16 +1,22 @@
 # Pluglio Elementor Addons
 
-A lightweight WordPress plugin that adds container link functionality and custom WooCommerce breadcrumbs to Elementor.
+A lightweight WordPress plugin that adds container link functionality, conditional display controls, and custom WooCommerce breadcrumbs to Elementor.
 
 ## Description
 
-Pluglio Elementor Addons extends Elementor with powerful features including clickable containers and custom WooCommerce breadcrumbs. These simple yet powerful features enhance your Elementor workflow without unnecessary bloat.
+Pluglio Elementor Addons extends Elementor with powerful features including clickable containers, conditional display controls, and custom WooCommerce breadcrumbs. These simple yet powerful features enhance your Elementor workflow without unnecessary bloat.
 
 ## Features
 
 - **Container Link**: Make any Elementor container clickable
   - Simple Interface: Easy toggle in the container's Advanced tab
   - Smart Click Handling: Respects existing links and form elements inside containers
+- **Conditional Display**: Show/hide any Elementor element based on conditions
+  - Works with ALL Elementor elements (widgets, sections, columns, containers)
+  - Multiple condition types: Custom fields, User meta, Post meta
+  - Advanced comparison operators: equals, not equals, contains, greater than, less than, empty/not empty, true/false
+  - ACF (Advanced Custom Fields) compatible
+  - Easy to use interface in the Advanced tab
 - **Custom WC Breadcrumbs**: Beautiful WooCommerce breadcrumbs with hierarchy display
   - Format: Products > Parent Category > Child Category
   - Full customization options for styling and appearance
@@ -40,6 +46,7 @@ Pluglio Elementor Addons extends Elementor with powerful features including clic
 1. Go to WordPress Admin > Pluglio Addons
 2. Check the features you want to enable:
    - Container Link
+   - Conditional Display
    - Custom WC Breadcrumbs
 3. Click "Save Settings"
 
@@ -54,6 +61,22 @@ Pluglio Elementor Addons extends Elementor with powerful features including clic
 7. Optional: Set link to open in new tab
 
 The container will now be clickable while preserving the functionality of any links, buttons, or form elements inside it.
+
+### Using Conditional Display
+
+1. Edit any page/post with Elementor
+2. Select ANY element (widget, section, column, or container)
+3. Go to the Advanced tab
+4. Find the "Conditional Display" section
+5. Toggle "Enable Conditional Display" to ON
+6. Configure your conditions:
+   - **Condition Type**: Choose between Custom Field, User Meta, or Post Meta
+   - **Field Name**: Enter the field key/name
+   - **Comparison**: Select how to compare (equals, not equals, contains, etc.)
+   - **Value**: Enter the value to compare against (if needed)
+7. The element will be hidden if conditions are not met
+
+Note: Elements are always visible in the Elementor editor for easy editing.
 
 ### Using Custom WC Breadcrumbs
 
@@ -82,6 +105,16 @@ The breadcrumbs will automatically display the correct hierarchy based on the cu
 - Ctrl/Cmd + Click opens links in a new tab
 - Cursor changes to pointer on hover
 
+### Conditional Display
+- Evaluates conditions on page load
+- Supports multiple field types:
+  - **Custom Fields**: Works with ACF and native WordPress custom fields
+  - **User Meta**: Check logged-in user's metadata
+  - **Post Meta**: Check current post/page metadata
+- Advanced operators for flexible conditions
+- Elements are completely hidden (display: none) when conditions fail
+- No performance impact - conditions are checked server-side
+
 ### Custom WC Breadcrumbs
 - Automatically detects the current WooCommerce page context
 - Displays hierarchical category structure for products
@@ -103,7 +136,8 @@ pluglio-elementor-addons/
 │   ├── admin/
 │   │   └── settings.php
 │   ├── extensions/
-│   │   └── container-link-extension.php
+│   │   ├── container-link-extension.php
+│   │   └── conditional-display-extension.php
 │   └── widgets/
 │       └── custom-wc-breadcrumbs.php
 ├── pluglio-elementor-addons.php
@@ -111,6 +145,15 @@ pluglio-elementor-addons/
 ```
 
 ## Changelog
+
+### Version 1.0.2
+- Added Conditional Display extension for all Elementor elements
+- Removed Custom Carousel widget (replaced with Conditional Display)
+- Enhanced extension architecture
+- Added support for custom fields, user meta, and post meta conditions
+- Added ACF (Advanced Custom Fields) compatibility
+- Added multiple comparison operators for flexible conditions
+- Performance optimizations
 
 ### Version 1.0.1
 - Added Custom WC Breadcrumbs widget

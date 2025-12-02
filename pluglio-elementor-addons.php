@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Pluglio Elementor Addons
  * Description: Custom Elementor widgets and addons with configurable settings
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Jezweb
  * Author URI: https://jezweb.com.au
  * Text Domain: pluglio-elementor-addons
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('PLUGLIO_VERSION', '1.0.1');
+define('PLUGLIO_VERSION', '1.0.2');
 define('PLUGLIO_URL', plugin_dir_url(__FILE__));
 define('PLUGLIO_PATH', plugin_dir_path(__FILE__));
 define('PLUGLIO_ASSETS_URL', PLUGLIO_URL . 'assets/');
@@ -67,6 +67,10 @@ class Pluglio_Elementor_Addons {
         if ($this->is_widget_enabled('custom_wc_breadcrumbs')) {
             require_once PLUGLIO_PATH . 'includes/widgets/custom-wc-breadcrumbs.php';
         }
+        
+        if ($this->is_widget_enabled('conditional_display')) {
+            require_once PLUGLIO_PATH . 'includes/extensions/conditional-display-extension.php';
+        }
     }
     
     public function register_widgets($widgets_manager) {
@@ -74,6 +78,8 @@ class Pluglio_Elementor_Addons {
         if ($this->is_widget_enabled('custom_wc_breadcrumbs')) {
             $widgets_manager->register(new \Pluglio_Custom_WC_Breadcrumbs());
         }
+        
+        // Note: Conditional Display is now an extension, not a widget
     }
     
     public function add_elementor_widget_categories($elements_manager) {
