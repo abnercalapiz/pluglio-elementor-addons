@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Pluglio Elementor Addons
  * Description: Custom Elementor widgets and addons with configurable settings
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Jezweb
  * Author URI: https://jezweb.com.au
  * Text Domain: pluglio-elementor-addons
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('PLUGLIO_VERSION', '1.0.2');
+define('PLUGLIO_VERSION', '1.0.3');
 define('PLUGLIO_URL', plugin_dir_url(__FILE__));
 define('PLUGLIO_PATH', plugin_dir_path(__FILE__));
 define('PLUGLIO_ASSETS_URL', PLUGLIO_URL . 'assets/');

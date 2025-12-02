@@ -70,6 +70,7 @@ class Pluglio_Conditional_Display_Extension {
                     'custom_field' => __('Custom Field', 'pluglio-elementor-addons'),
                     'user_meta' => __('User Meta', 'pluglio-elementor-addons'),
                     'post_meta' => __('Post Meta', 'pluglio-elementor-addons'),
+                    'product_attribute' => __('Product Attribute (WooCommerce)', 'pluglio-elementor-addons'),
                 ],
                 'condition' => [
                     'pluglio_enable_condition' => 'yes',
@@ -83,7 +84,7 @@ class Pluglio_Conditional_Display_Extension {
                 'label' => __('Field Name', 'pluglio-elementor-addons'),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'placeholder' => __('field_name', 'pluglio-elementor-addons'),
-                'description' => __('Enter the custom field, user meta, or post meta key', 'pluglio-elementor-addons'),
+                'description' => __('Enter the custom field, user meta, post meta key, or product attribute slug (e.g., pa_color, pa_size)', 'pluglio-elementor-addons'),
                 'condition' => [
                     'pluglio_enable_condition' => 'yes',
                 ],
@@ -136,6 +137,20 @@ class Pluglio_Conditional_Display_Extension {
                 'content_classes' => 'elementor-descriptor',
                 'condition' => [
                     'pluglio_enable_condition' => 'yes',
+                    'pluglio_condition_type!' => 'product_attribute',
+                ],
+            ]
+        );
+        
+        $element->add_control(
+            'pluglio_product_attribute_notice',
+            [
+                'type' => \Elementor\Controls_Manager::RAW_HTML,
+                'raw' => __('Note: Product attributes work only on WooCommerce product pages. Use attribute slugs like "pa_color" for global attributes or "color" for custom attributes. Multiple values are comma-separated.', 'pluglio-elementor-addons'),
+                'content_classes' => 'elementor-descriptor',
+                'condition' => [
+                    'pluglio_enable_condition' => 'yes',
+                    'pluglio_condition_type' => 'product_attribute',
                 ],
             ]
         );
@@ -195,20 +210,117 @@ class Pluglio_Conditional_Display_Extension {
             case 'post_meta':
                 $field_value = get_post_meta(get_the_ID(), $field_name, true);
                 break;
+                
+            case 'product_attribute':
+                // Check if WooCommerce is active
+                if (class_exists('WooCommerce')) {
+                    global $product;
+                    
+                    // Try to get product from global first
+                    if (!$product || !is_a($product, 'WC_Product')) {
+                        // If we're in a loop (shop/archive), get the current product
+                        $product_id = get_the_ID();
+                        
+                        // Check if this is a product post type
+                        if (get_post_type($product_id) === 'product' && function_exists('wc_get_product')) {
+                            $product = wc_get_product($product_id);
+                        }
+                    }
+                    
+                    if ($product && is_a($product, 'WC_Product')) {
+                        // Handle both global attributes (pa_) and custom attributes
+                        if (strpos($field_name, 'pa_') === 0) {
+                            // Global attribute
+                            $field_value = $product->get_attribute($field_name);
+                        } else {
+                            // Try as custom attribute
+                            $field_value = $product->get_attribute($field_name);
+                            
+                            // If not found, try with pa_ prefix
+                            if (empty($field_value)) {
+                                $field_value = $product->get_attribute('pa_' . $field_name);
+                            }
+                        }
+                        
+                        // For variable products, get the selected variation's attribute
+                        if (method_exists($product, 'is_type') && $product->is_type('variable') && empty($field_value)) {
+                            if (method_exists($product, 'get_available_variations')) {
+                                $variations = $product->get_available_variations();
+                                if (!empty($variations) && method_exists($product, 'get_default_attributes')) {
+                                    // Get default attributes or first variation
+                                    $default_attributes = $product->get_default_attributes();
+                                    if (isset($default_attributes[$field_name])) {
+                                        $field_value = $default_attributes[$field_name];
+                                    } elseif (isset($default_attributes[str_replace('pa_', '', $field_name)])) {
+                                        $field_value = $default_attributes[str_replace('pa_', '', $field_name)];
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Ensure field_value is always a string
+                        $field_value = (string) $field_value;
+                    }
+                }
+                break;
         }
         
         // Perform comparison
         switch ($operator) {
             case 'equals':
+                // Ensure field_value is a string for strpos check
+                $field_value_str = (string) $field_value;
+                
+                // For product attributes, handle comma-separated values
+                if ($settings['pluglio_condition_type'] === 'product_attribute' && strpos($field_value_str, ',') !== false) {
+                    $values = array_map('trim', explode(',', $field_value_str));
+                    return in_array($compare_value, $values);
+                }
                 return $field_value == $compare_value;
                 
             case 'not_equals':
+                // Ensure field_value is a string for strpos check
+                $field_value_str = (string) $field_value;
+                
+                // For product attributes, handle comma-separated values
+                if ($settings['pluglio_condition_type'] === 'product_attribute' && strpos($field_value_str, ',') !== false) {
+                    $values = array_map('trim', explode(',', $field_value_str));
+                    return !in_array($compare_value, $values);
+                }
                 return $field_value != $compare_value;
                 
             case 'contains':
+                // Ensure both values are strings
+                $field_value = (string) $field_value;
+                $compare_value = (string) $compare_value;
+                
+                // For product attributes, check each value
+                if ($settings['pluglio_condition_type'] === 'product_attribute' && strpos($field_value, ',') !== false) {
+                    $values = array_map('trim', explode(',', $field_value));
+                    foreach ($values as $value) {
+                        if (strpos((string) $value, $compare_value) !== false) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
                 return strpos($field_value, $compare_value) !== false;
                 
             case 'not_contains':
+                // Ensure both values are strings
+                $field_value = (string) $field_value;
+                $compare_value = (string) $compare_value;
+                
+                // For product attributes, check each value
+                if ($settings['pluglio_condition_type'] === 'product_attribute' && strpos($field_value, ',') !== false) {
+                    $values = array_map('trim', explode(',', $field_value));
+                    foreach ($values as $value) {
+                        if (strpos((string) $value, $compare_value) !== false) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
                 return strpos($field_value, $compare_value) === false;
                 
             case 'empty':

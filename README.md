@@ -13,9 +13,11 @@ Pluglio Elementor Addons extends Elementor with powerful features including clic
   - Smart Click Handling: Respects existing links and form elements inside containers
 - **Conditional Display**: Show/hide any Elementor element based on conditions
   - Works with ALL Elementor elements (widgets, sections, columns, containers)
-  - Multiple condition types: Custom fields, User meta, Post meta
+  - Multiple condition types: Custom fields, User meta, Post meta, **WooCommerce Product Attributes**
+  - **NEW**: Full WooCommerce product attribute support (global and custom attributes)
   - Advanced comparison operators: equals, not equals, contains, greater than, less than, empty/not empty, true/false
   - ACF (Advanced Custom Fields) compatible
+  - Works on single product pages and shop/archive loops
   - Easy to use interface in the Advanced tab
 - **Custom WC Breadcrumbs**: Beautiful WooCommerce breadcrumbs with hierarchy display
   - Format: Products > Parent Category > Child Category
@@ -70,11 +72,20 @@ The container will now be clickable while preserving the functionality of any li
 4. Find the "Conditional Display" section
 5. Toggle "Enable Conditional Display" to ON
 6. Configure your conditions:
-   - **Condition Type**: Choose between Custom Field, User Meta, or Post Meta
+   - **Condition Type**: Choose between Custom Field, User Meta, Post Meta, or Product Attribute (WooCommerce)
    - **Field Name**: Enter the field key/name
+     - For product attributes: Use `pa_color`, `pa_size` (global) or `color`, `brand` (custom)
    - **Comparison**: Select how to compare (equals, not equals, contains, etc.)
    - **Value**: Enter the value to compare against (if needed)
 7. The element will be hidden if conditions are not met
+
+#### WooCommerce Product Attribute Examples:
+- Show element only for products with color "Red": 
+  - Condition Type: `Product Attribute`, Field: `pa_color`, Comparison: `Equals`, Value: `Red`
+- Hide element for products with size "Large" or "XL":
+  - Condition Type: `Product Attribute`, Field: `pa_size`, Comparison: `Not Contains`, Value: `Large`
+- Show element only if product has any brand:
+  - Condition Type: `Product Attribute`, Field: `brand`, Comparison: `Is Not Empty`
 
 Note: Elements are always visible in the Elementor editor for easy editing.
 
@@ -111,7 +122,10 @@ The breadcrumbs will automatically display the correct hierarchy based on the cu
   - **Custom Fields**: Works with ACF and native WordPress custom fields
   - **User Meta**: Check logged-in user's metadata
   - **Post Meta**: Check current post/page metadata
+  - **Product Attributes**: Check WooCommerce product attributes (both global and custom)
 - Advanced operators for flexible conditions
+- Smart handling of comma-separated attribute values
+- Works on single product pages and shop/archive loops
 - Elements are completely hidden (display: none) when conditions fail
 - No performance impact - conditions are checked server-side
 
@@ -145,6 +159,15 @@ pluglio-elementor-addons/
 ```
 
 ## Changelog
+
+### Version 1.0.3
+- Added WooCommerce product attribute support to Conditional Display
+- Support for both global attributes (pa_*) and custom product attributes
+- Smart comma-separated value handling for multi-value attributes
+- Works on product pages and shop/archive loops
+- Enhanced error handling and type safety
+- Fixed potential PHP warnings with string comparisons
+- Added method existence checks for better compatibility
 
 ### Version 1.0.2
 - Added Conditional Display extension for all Elementor elements
