@@ -1,0 +1,125 @@
+.pluglio-toggle-search-wrapper {
+    position: relative;
+    display: inline-block;
+}
+.pluglio-toggle-search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+.pluglio-toggle-search-button:focus {
+    outline: none;
+}
+.pluglio-toggle-search-button .pluglio-search-icon,
+.pluglio-toggle-search-button .pluglio-close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pluglio-search-form-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+.pluglio-search-form-container.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.pluglio-search-form {
+    width: 100%;
+}
+.pluglio-search-form-inner {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    min-width: 419px;
+}
+.pluglio-search-input {
+    flex: 1;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.pluglio-search-input:focus {
+    outline: none;
+}
+.pluglio-search-submit {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0;
+    flex-shrink: 0;
+}
+.pluglio-search-submit:hover {
+    transform: translateY(-1px);
+}
+
+/* RTL Support */
+.rtl .pluglio-search-form-container {
+    right: auto;
+    left: 0;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .pluglio-search-form-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        min-width: auto;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .pluglio-search-form {
+        width: 100%;
+        max-width: 500px;
+    } 
+    .pluglio-search-form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: -1;
+    }
+}
+
+/* Animation for toggle button rotation */
+.pluglio-toggle-search-button.active {
+    transform: rotate(180deg);
+}
+
+/* Ensure proper stacking context */
+.elementor-widget-pluglio-toggle-search {
+    z-index: 999;
+}
+
+/* Focus styles for accessibility */
+.pluglio-toggle-search-button:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+.pluglio-search-input:focus-visible {
+    box-shadow: 0 0 0 2px rgb(0 123 255 / 0%);
+}
+.pluglio-search-submit:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0);
+}

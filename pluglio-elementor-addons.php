@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Pluglio Elementor Addons
  * Description: Custom Elementor widgets and addons with configurable settings
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Jezweb
  * Author URI: https://jezweb.com.au
  * Text Domain: pluglio-elementor-addons
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('PLUGLIO_VERSION', '1.0.3');
+define('PLUGLIO_VERSION', '1.0.4');
 define('PLUGLIO_URL', plugin_dir_url(__FILE__));
 define('PLUGLIO_PATH', plugin_dir_path(__FILE__));
 define('PLUGLIO_ASSETS_URL', PLUGLIO_URL . 'assets/');
@@ -68,6 +68,10 @@ class Pluglio_Elementor_Addons {
             require_once PLUGLIO_PATH . 'includes/widgets/custom-wc-breadcrumbs.php';
         }
         
+        if ($this->is_widget_enabled('toggle_search')) {
+            require_once PLUGLIO_PATH . 'includes/widgets/toggle-search.php';
+        }
+        
         if ($this->is_widget_enabled('conditional_display')) {
             require_once PLUGLIO_PATH . 'includes/extensions/conditional-display-extension.php';
         }
@@ -77,6 +81,11 @@ class Pluglio_Elementor_Addons {
         // Register Custom WC Breadcrumbs widget
         if ($this->is_widget_enabled('custom_wc_breadcrumbs')) {
             $widgets_manager->register(new \Pluglio_Custom_WC_Breadcrumbs());
+        }
+        
+        // Register Toggle Search widget
+        if ($this->is_widget_enabled('toggle_search')) {
+            $widgets_manager->register(new \Pluglio_Toggle_Search());
         }
         
         // Note: Conditional Display is now an extension, not a widget

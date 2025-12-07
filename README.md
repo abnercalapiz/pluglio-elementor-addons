@@ -1,10 +1,10 @@
 # Pluglio Elementor Addons
 
-A lightweight WordPress plugin that adds container link functionality, conditional display controls, and custom WooCommerce breadcrumbs to Elementor.
+A lightweight WordPress plugin that adds container link functionality, conditional display controls, custom WooCommerce breadcrumbs, and a modern toggle search widget to Elementor.
 
 ## Description
 
-Pluglio Elementor Addons extends Elementor with powerful features including clickable containers, conditional display controls, and custom WooCommerce breadcrumbs. These simple yet powerful features enhance your Elementor workflow without unnecessary bloat.
+Pluglio Elementor Addons extends Elementor with powerful features including clickable containers, conditional display controls, custom WooCommerce breadcrumbs, and a modern toggle search widget. These simple yet powerful features enhance your Elementor workflow without unnecessary bloat.
 
 ## Features
 
@@ -23,6 +23,13 @@ Pluglio Elementor Addons extends Elementor with powerful features including clic
   - Format: Products > Parent Category > Child Category
   - Full customization options for styling and appearance
   - Works on product pages, category pages, and shop pages
+- **Toggle Search**: Modern search widget with smooth animations
+  - Click to reveal/hide search form
+  - Customizable toggle and close icons
+  - Post type filtering (posts, pages, products)
+  - Mobile-friendly full-screen overlay
+  - Optional submit button
+  - Full styling control
 - **Lightweight**: Minimal code, no unnecessary features
 - **Settings Panel**: Enable/disable features from the WordPress admin
 
@@ -50,6 +57,7 @@ Pluglio Elementor Addons extends Elementor with powerful features including clic
    - Container Link
    - Conditional Display
    - Custom WC Breadcrumbs
+   - Toggle Search
 3. Click "Save Settings"
 
 ### Using Container Link
@@ -108,6 +116,26 @@ Note: Elements are always visible in the Elementor editor for easy editing.
 
 The breadcrumbs will automatically display the correct hierarchy based on the current page.
 
+### Using Toggle Search
+
+1. Edit any page/post with Elementor (commonly used in headers)
+2. Search for "Toggle Search" in the widgets panel
+3. Drag the widget to your desired location
+4. Customize the settings:
+   - **Placeholder Text**: Set the search input placeholder
+   - **Search Post Type**: Filter searches to specific post types
+   - **Toggle Icon**: Choose the icon for the search toggle button
+   - **Close Icon**: Choose the icon for closing the search
+   - **Submit Button**: Toggle to show/hide the search submit button
+5. Style your search widget:
+   - Toggle button size and colors
+   - Search form background and padding
+   - Input field styling
+   - Submit button appearance
+   - Hover states and animations
+
+The search form will smoothly reveal when clicked and can be closed by clicking the close icon, clicking outside, or pressing ESC.
+
 ## How It Works
 
 ### Container Link
@@ -136,6 +164,15 @@ The breadcrumbs will automatically display the correct hierarchy based on the cu
 - Works seamlessly with deep category structures
 - Fully integrated with Elementor's live preview
 
+### Toggle Search
+- Smooth animations for revealing/hiding search form
+- Click outside or ESC key to close
+- Mobile-responsive with full-screen overlay on small screens
+- Preserves accessibility with proper ARIA attributes
+- Supports search filtering by post type
+- No page reload - form appears instantly
+- Proper focus management for keyboard navigation
+
 ## File Structure
 
 ```
@@ -143,9 +180,11 @@ pluglio-elementor-addons/
 ├── assets/
 │   ├── css/
 │   │   ├── admin-style.css
-│   │   └── custom-wc-breadcrumbs.css
+│   │   ├── custom-wc-breadcrumbs.css
+│   │   └── toggle-search.css
 │   └── js/
-│       └── container-link.js
+│       ├── container-link.js
+│       └── toggle-search.js
 ├── includes/
 │   ├── admin/
 │   │   └── settings.php
@@ -153,12 +192,26 @@ pluglio-elementor-addons/
 │   │   ├── container-link-extension.php
 │   │   └── conditional-display-extension.php
 │   └── widgets/
-│       └── custom-wc-breadcrumbs.php
+│       ├── custom-wc-breadcrumbs.php
+│       └── toggle-search.php
 ├── pluglio-elementor-addons.php
 └── README.md
 ```
 
 ## Changelog
+
+### Version 1.0.4
+- Added Toggle Search widget with modern animations
+- Click to reveal/hide search functionality
+- Customizable toggle and close icons
+- Post type search filtering support
+- Mobile-responsive full-screen overlay
+- Optional submit button with full styling control
+- Smooth animations and transitions
+- Accessibility features with proper ARIA attributes
+- Focus management for keyboard navigation
+- Fixed JavaScript event handling for better performance
+- Added proper cleanup on widget removal
 
 ### Version 1.0.3
 - Added WooCommerce product attribute support to Conditional Display

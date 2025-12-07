@@ -130,6 +130,10 @@ class Pluglio_Settings {
                 'name' => __('Custom WC Breadcrumbs', 'pluglio-elementor-addons'),
                 'description' => __('Custom WooCommerce breadcrumbs widget with format: Products > Parent Product Category > Product Category 2nd Level', 'pluglio-elementor-addons')
             ],
+            'toggle_search' => [
+                'name' => __('Toggle Search', 'pluglio-elementor-addons'),
+                'description' => __('A modern search widget with toggle functionality. Click to reveal/hide the search form with smooth animations and customizable styling.', 'pluglio-elementor-addons')
+            ],
             'conditional_display' => [
                 'name' => __('Conditional Display', 'pluglio-elementor-addons'),
                 'description' => __('Adds conditional display controls to the Advanced tab of all Elementor elements. Show or hide any element based on custom fields, user meta, or post meta values.', 'pluglio-elementor-addons')
